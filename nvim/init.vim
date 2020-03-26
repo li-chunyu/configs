@@ -1,3 +1,20 @@
+" =======================================================================
+" Install vim-plug
+" =======================================================================
+" Install vim-plug:
+" Unix
+" curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
+"    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+" Windows
+" md ~\AppData\Local\nvim\autoload
+"$uri = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+"(New-Object Net.WebClient).DownloadFile(
+"  $uri,
+"  $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath(
+"    \"~\AppData\Local\nvim\autoload\plug.vim\" (去掉“的转义\)
+"  )
+")
+
 call plug#begin('~/.vim/plugged') 
 "文件浏览树
 Plug 'preservim/nerdtree'
@@ -5,6 +22,8 @@ Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'rakr/vim-one'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'dense-analysis/ale'
+" 括号配对
+Plug 'jiangmiao/auto-pairs'
 
 "base16主题
 Plug 'chriskempson/base16-vim'
@@ -29,12 +48,14 @@ Plug 'vim-airline/vim-airline'
 
 call plug#end()
 
-"缓存
+"======================================================================
+" ncm2 setting
+"======================================================================
 autocmd BufEnter * call ncm2#enable_for_buffer()
+
 " 补全模式,具体详情请看下文
-set completeopt=menu,noinsert
+set completeopt=noinsert,menuone,noselect
 set shortmess+=c
-inoremap <c-c> <ESC>
 " 延迟弹窗,这样提示更加流畅
 let ncm2#popup_delay = 5
 "输入几个字母开始提醒:[[最小优先级,最小长度]]
@@ -45,18 +66,21 @@ let g:ncm2#matcher = 'substrfuzzy'
 "使用tab键向下选择弹框菜单
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>" 
 "使用shift+tab键向上选择弹窗菜单,这里不设置因为笔记本比较难操作.如果向下太多我通常习惯使用Backspace键再重新操作一遍
-"inoremap <expr> <S> pumvisible() ? "\<C-p>" : "\<S>"
+inoremap <expr> <S> pumvisible() ? "\<C-p>" : "\<S>"
 
-
+"=======================================================================
 "languageClient-neovim 配置
+"=======================================================================
 nnoremap <F5> :call LanguageClient_contextMenu()<CR>
 " Or map each action separately
 nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+" 调用 language server 命令
+let g:LanguageClient_serverCommands = {
+  \ 'cpp': ['clangd'],
+  \ }
 
-" pyclang C++ 不全
-let g:ncm2_pyclang#library_path = '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/libclang.dylib'
 " python 补全
 let g:ncm2_jedi#python_version = 3
 let g:python3_host_prog = '/usr/local/bin/python3'
