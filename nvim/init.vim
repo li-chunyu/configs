@@ -140,3 +140,21 @@ set softtabstop=4
 set tabstop=4
 set noexpandtab
 
+"=======================================================================
+" Keyboard shortcuts
+"=======================================================================
+"
+" 不用输入：，少按一个 shfit
+nnoremap ; :
+
+inoremap <C-j> <Esc>
+nnoremap <C-j> <Esc>
+vnoremap <C-j> <Esc>
+
+inoremap <C-k> <Esc>
+nnoremap <C-k> <Esc>
+vnoremap <C-k> <Esc>
+
+" Ctrl+h to stop searching
+vnoremap <C-h> :nohlsearch<cr>
+nnoremap <C-h> :nohlsearch<cr>
