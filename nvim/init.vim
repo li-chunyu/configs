@@ -1,4 +1,4 @@
-" =======================================================================
+"" =======================================================================
 " Install vim-plug
 " =======================================================================
 " Install vim-plug:
@@ -32,7 +32,7 @@ Plug 'chriskempson/base16-vim'
 Plug 'ncm2/ncm2'
 Plug 'roxma/nvim-yarp' 
 Plug 'ncm2/ncm2-jedi'
-Plug 'ncm2/ncm2-pyclang'
+" Plug 'ncm2/ncm2-pyclang'
 Plug 'ncm2/ncm2-go'
 
 Plug 'autozimu/LanguageClient-neovim', {
@@ -79,7 +79,17 @@ nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 " 调用 language server 命令
 let g:LanguageClient_serverCommands = {
   \ 'cpp': ['clangd'],
+  \ 'c': ['clangd']
   \ }
+
+"======================================================
+" ALE
+"======================================================
+" Set this. Airline will handle the rest.
+let g:airline#extensions#ale#enabled = 1
+let g:ale_cpp_clang_options = '-std=c++11 -Wall'
+let g:ale_cpp_gcc_options = '-std=c++11 -Wall'
+
 
 " python 补全
 let g:ncm2_jedi#python_version = 3
@@ -127,7 +137,7 @@ set noshowmode
 set hidden
 set nowrap
 set nojoinspaces
-
+set cursorline
 
 " search
 set incsearch
